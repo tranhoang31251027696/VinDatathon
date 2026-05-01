@@ -1,1 +1,33 @@
-VinDatathon 2026 - THE GRIDBREAKER | Team CUTIE KTDự án phân tích và dự báo doanh thu thương mại điện tử dựa trên bộ dữ liệu gồm 13 bảng liên kết. Hệ thống được thiết kế theo quy trình khép kín từ khám phá dữ liệu (EDA) đến xây dựng mô hình Ensemble Machine Learning.  👨‍💻 Thông tin Thành viên: Trần Thế Đăng Khoa, Hoàng Bảo Trân.   🏗️ Cấu trúc Pipeline & Tệp tinQuy trình thực hiện được chia thành 4 giai đoạn chính tương ứng với các tệp tin trong repository:1. Phân tích Khám phá & Trắc nghiệmEDA_narrative.ipynb: Thực hiện phân tích đa tầng (Mô hình Phễu Tăng trưởng) nhằm xác định các đặc điểm, xu hướng và "nút thắt" vận hành như tỷ lệ trả hàng do sai kích cỡ (~50%) và áp lực nhu cầu vùng miền.  MCQ.ipynb: Giải quyết và trả lời các câu hỏi trắc nghiệm thực tế dựa trên các phát hiện từ dữ liệu thô và phân tích.2. Tiền xử lý & Feature EngineeringreEDA: Thực hiện làm sạch dữ liệu, xử lý rò rỉ (Data Leakage) bằng cách loại bỏ các cột proxy. Đây là bước quan trọng để tạo ra bộ đặc trưng gồm 6 nhóm chính (Lags, Rolling, Sin/Cos Encoding...).  Đầu ra: out.csv – Bộ dữ liệu nhất quán, sẵn sàng cho huấn luyện.3. Mô hình hóa & Dự báorevenue_forecast: Xây dựng Pipeline dự báo 2 tầng. Tầng 1 dự báo các chỉ số dẫn dắt (Leading Indicators); Tầng 2 sử dụng mô hình Ensemble (10% LightGBM + 90% XGBoost) để dự báo log(Revenue).  Đầu ra: sales_test.csv – Kết quả dự báo doanh thu cho giai đoạn kiểm thử.📈 Kết quả nổi bậtĐộ chính xác: Mô hình Ensemble đạt $R^2 = 0.981$ trên tập kiểm thử Cross-Validation thời gian.  Insight trọng yếu: Xác định được total_refund_amount là chỉ số dẫn dắt quan trọng nhất ($r = 0.645$) cho doanh thu tháng kế tiếp.  Đề xuất giá trị: Giải pháp Size Guide AI giúp tiết kiệm khoảng 232 triệu VND/năm chi phí logistics ngược.  🛠️ Yêu cầu hệ thốngNgôn ngữ: Python 3.xThư viện chính: pandas, numpy, lightgbm, xgboost, shap, scikit-learn.
+# [cite_start]VinDatathon 2026 - THE GRIDBREAKER 
+### [cite_start]Team: CUTIE KT 
+[cite_start]**Thành viên:** Trần Thế Đăng Khoa & Hoàng Bảo Trân 
+
+[cite_start]Dự án tập trung giải quyết bài toán tối ưu hóa vận hành và dự báo doanh thu dựa trên bộ dữ liệu thương mại điện tử gồm 13 bảng liên kết[cite: 8].
+
+---
+
+## 🏗️ Cấu trúc Repository
+
+### 1. Khám phá & Giải đố
+* [cite_start]**`EDA_narrative.ipynb`**: Thực hiện phân tích đa tầng để tìm ra các "nút thắt" kinh doanh[cite: 8, 9]. 
+    * Xác định lỗi `wrong_size` chiếm ~50% đơn hoàn trong nhóm Outdoor & Streetwear[cite: 2, 5].
+    * [cite_start]Phân tích áp lực nhu cầu vùng miền, phát hiện sự lệch pha cung cầu tại vùng East[cite: 12, 40].
+* **`MCQ.ipynb`**: Chứa lời giải chi tiết cho các câu hỏi trắc nghiệm dựa trên dữ liệu thực tế của cuộc thi.
+
+### 2. Xử lý Dữ liệu (Preprocessing)
+* **`reEDA`**: Quy trình làm sạch và chuẩn bị dữ liệu.
+    * [cite_start]Loại bỏ các chỉ số ảo như `avg_rating`, thay thế bằng `defect_rate` để phản ánh đúng chất lượng[cite: 7, 17].
+    * Tạo các đặc trưng (Feature Engineering) cần thiết cho mô hình dự báo.
+    * **Output:** `out.csv` – Bộ dữ liệu sạch, sẵn sàng cho training.
+
+### 3. Dự báo Doanh thu (Modeling)
+* **`revenue_forecast`**: Xây dựng và triển khai mô hình dự báo. 
+    * Sử dụng các phát hiện từ EDA (như lịch áp lực nhu cầu) để tinh chỉnh mô hình[cite: 41].
+    * **Output:** `sales_test.csv` – Kết quả dự báo doanh thu cuối cùng.
+
+---
+
+## 💡 Đề xuất Hành động nổi bật
+* [cite_start]**Số hóa Size Guide:** Dự kiến giảm 30% đơn hoàn do sai size, tiết kiệm ~232.5 triệu VND/năm[cite: 5, 27].
+* **Điều phối Tồn kho:** Tăng buffer stock cho vùng East vào tháng 4 và tháng 12 để giải quyết triệt để tình trạng fill_rate âm[cite: 35, 40].
+* [cite_start]**Tối ưu Freeship:** Nâng ngưỡng từ 300k lên 500k để cải thiện ROI nhanh chóng[cite: 39, 41].
